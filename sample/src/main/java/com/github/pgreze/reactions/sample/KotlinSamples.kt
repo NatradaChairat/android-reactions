@@ -11,9 +11,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.github.pgreze.reactions.PopupGravity
 import com.github.pgreze.reactions.ReactionPopup
-import com.github.pgreze.reactions.dsl.reactionConfig
-import com.github.pgreze.reactions.dsl.reactionPopup
-import com.github.pgreze.reactions.dsl.reactions
+import com.github.pgreze.reactions.reactionConfig
+import com.github.pgreze.reactions.reactionPopup
+import com.github.pgreze.reactions.reactions
 
 fun MainActivity.setupTopRight() {
     // Popup DSL + listener via function
@@ -43,7 +43,8 @@ fun MainActivity.setupTopRight() {
         toast("$position selected")
         true
     }
-    findViewById<View>(R.id.top_right_btn).setOnTouchListener(popup1)
+    findViewById<View>(R.id.top_right_btn).setOnClickListener(popup1)
+    findViewById<View>(R.id.top_right_btn).setOnLongClickListener(popup1)
 }
 
 fun MainActivity.setupRight() {
@@ -74,7 +75,8 @@ fun MainActivity.setupRight() {
     val popup2 = ReactionPopup(this, config) { position -> true.also {
         toast("$position selected")
     } }
-    findViewById<View>(R.id.right_btn).setOnTouchListener(popup2)
+    findViewById<View>(R.id.right_btn).setOnClickListener(popup2)
+    findViewById<View>(R.id.right_btn).setOnLongClickListener(popup2)
 }
 
 fun MainActivity.onReactionSelected(position: Int) = true.also {

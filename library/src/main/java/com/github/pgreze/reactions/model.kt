@@ -49,7 +49,9 @@ data class ReactionsConfig(
     @ColorInt val textColor: Int,
     val textHorizontalPadding: Int,
     val textVerticalPadding: Int,
-    val textSize: Float
+    val textSize: Float,
+
+    val defaultReactionPosition: Int
 )
 
 private val NO_TEXT_PROVIDER: ReactionTextProvider = { _ -> null }
@@ -57,14 +59,19 @@ private val NO_TEXT_PROVIDER: ReactionTextProvider = { _ -> null }
 enum class PopupGravity {
     /** Default position, similar to Facebook app. */
     DEFAULT,
+
     /** Align dialog left side with left side of the parent view. */
     PARENT_LEFT,
+
     /** Align dialog right side with right side of the parent view. */
     PARENT_RIGHT,
+
     /** Position dialog on left side of the screen. */
     SCREEN_LEFT,
+
     /** Position dialog on right side of the screen. */
     SCREEN_RIGHT,
+
     /** Position dialog on center of the screen. */
     CENTER
 }
@@ -78,7 +85,9 @@ class ReactionsConfigBuilder(val context: Context) {
     // reactions = listOf(R.drawable.img1, R.drawable.img2, ...)
     var reactionsIds: IntArray
         get() = throw NotImplementedError()
-        set(value) { withReactions(value) }
+        set(value) {
+            withReactions(value)
+        }
 
     @Px
     var reactionSize: Int =
@@ -88,7 +97,8 @@ class ReactionsConfigBuilder(val context: Context) {
     var horizontalMargin: Int =
         context.resources.getDimensionPixelSize(R.dimen.reactions_item_margin)
 
-    @Px var verticalMargin: Int = horizontalMargin
+    @Px
+    var verticalMargin: Int = horizontalMargin
 
     var popupGravity: PopupGravity = PopupGravity.DEFAULT
 
@@ -105,7 +115,9 @@ class ReactionsConfigBuilder(val context: Context) {
 
     var reactionTexts: Int
         get() = throw NotImplementedError()
-        set(@ArrayRes value) { withReactionTexts(value) }
+        set(@ArrayRes value) {
+            withReactionTexts(value)
+        }
 
     var textBackground: Drawable? = null
 
@@ -117,6 +129,8 @@ class ReactionsConfigBuilder(val context: Context) {
     var textVerticalPadding: Int = 0
 
     var textSize: Float = 0f
+
+    var defaultReactionPosition = 0
 
     // Builder pattern for Java
 
@@ -192,6 +206,10 @@ class ReactionsConfigBuilder(val context: Context) {
         this.textSize = textSize
     }
 
+    fun withDefaultReactionPosition(position: Int) = this.also {
+        this.defaultReactionPosition = position
+    }
+
     fun build() = ReactionsConfig(
         reactions = reactions.takeIf { it.isNotEmpty() }
             ?: throw IllegalArgumentException("Empty reactions"),
@@ -208,10 +226,12 @@ class ReactionsConfigBuilder(val context: Context) {
             ?: ContextCompat.getDrawable(context, R.drawable.reactions_text_background)!!,
         textColor = textColor,
         textHorizontalPadding = textHorizontalPadding.takeIf { it != 0 }
-            ?: context.resources.getDimension(R.dimen.reactions_text_horizontal_padding).roundToInt(),
+            ?: context.resources.getDimension(R.dimen.reactions_text_horizontal_padding)
+                .roundToInt(),
         textVerticalPadding = textVerticalPadding.takeIf { it != 0 }
             ?: context.resources.getDimension(R.dimen.reactions_text_vertical_padding).roundToInt(),
         textSize = textSize.takeIf { it != 0f }
-            ?: context.resources.getDimension(R.dimen.reactions_text_size)
+            ?: context.resources.getDimension(R.dimen.reactions_text_size),
+        defaultReactionPosition = defaultReactionPosition
     )
 }

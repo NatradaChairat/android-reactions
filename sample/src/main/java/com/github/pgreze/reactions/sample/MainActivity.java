@@ -3,8 +3,9 @@ package com.github.pgreze.reactions.sample;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.pgreze.reactions.ReactionPopup;
 import com.github.pgreze.reactions.ReactionsConfigBuilder;
@@ -12,7 +13,7 @@ import com.github.pgreze.reactions.ReactionsConfigBuilder;
 public class MainActivity extends AppCompatActivity {
 
     private final String[] strings = {
-        "like", "love", "laugh", "wow", "sad", "angry"
+            "like", "love", "laugh", "wow", "sad", "angry"
     };
 
     @Override
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         sampleBottomLeft();
         KotlinSamplesKt.setupTopRight(this);
         KotlinSamplesKt.setupRight(this);
+
     }
 
     private void sampleCenterLeft() {
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
                         .withReactionTexts(position -> strings[position])
                         .build());
 
-        findViewById(R.id.facebook_btn).setOnTouchListener(popup);
+        findViewById(R.id.facebook_btn).setOnClickListener(popup);
+        findViewById(R.id.facebook_btn).setOnLongClickListener(popup);
     }
 
     private void sampleTopLeft() {
@@ -64,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
                         .build(),
                 position -> true);
 
-        findViewById(R.id.top_btn).setOnTouchListener(popup);
+        findViewById(R.id.top_btn).setOnClickListener(popup);
+        findViewById(R.id.top_btn).setOnLongClickListener(popup);
     }
 
     private void sampleBottomLeft() {
@@ -99,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             return position != 3;
         });
 
-        findViewById(R.id.crypto_bottom_left).setOnTouchListener(popup);
+        findViewById(R.id.crypto_bottom_left).setOnClickListener(popup);
+        findViewById(R.id.crypto_bottom_left).setOnLongClickListener(popup);
+
     }
 }
