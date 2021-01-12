@@ -51,7 +51,7 @@ data class ReactionsConfig(
     val textVerticalPadding: Int,
     val textSize: Float,
 
-    val defaultReactionPosition: Int
+    var defaultReactionPosition: Int
 )
 
 private val NO_TEXT_PROVIDER: ReactionTextProvider = { _ -> null }
