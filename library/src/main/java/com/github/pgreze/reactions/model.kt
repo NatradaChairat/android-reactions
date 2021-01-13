@@ -18,6 +18,8 @@ import kotlin.math.roundToInt
  */
 typealias ReactionSelectedListener = (position: Int) -> Boolean
 
+typealias ReactionClickListener = () -> Unit
+
 /**
  * Reaction text provider.
  * @param position position of current selected item in [ReactionsConfig.reactions].
@@ -51,7 +53,6 @@ data class ReactionsConfig(
     val textVerticalPadding: Int,
     val textSize: Float,
 
-    var defaultReactionPosition: Int
 )
 
 private val NO_TEXT_PROVIDER: ReactionTextProvider = { _ -> null }
@@ -206,10 +207,6 @@ class ReactionsConfigBuilder(val context: Context) {
         this.textSize = textSize
     }
 
-    fun withDefaultReactionPosition(position: Int) = this.also {
-        this.defaultReactionPosition = position
-    }
-
     fun build() = ReactionsConfig(
         reactions = reactions.takeIf { it.isNotEmpty() }
             ?: throw IllegalArgumentException("Empty reactions"),
@@ -232,6 +229,5 @@ class ReactionsConfigBuilder(val context: Context) {
             ?: context.resources.getDimension(R.dimen.reactions_text_vertical_padding).roundToInt(),
         textSize = textSize.takeIf { it != 0f }
             ?: context.resources.getDimension(R.dimen.reactions_text_size),
-        defaultReactionPosition = defaultReactionPosition
     )
 }

@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
                         .withTextVerticalPadding(0)
                         .withTextSize(getResources().getDimension(R.dimen.reactions_text_size))
                         .build(),
+                () -> {
+
+                    return null;
+                }
+                ,
                 position -> true);
 
         findViewById(R.id.top_btn).setOnClickListener(popup);

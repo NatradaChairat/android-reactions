@@ -16,6 +16,7 @@ import android.widget.PopupWindow
 class ReactionPopup @JvmOverloads constructor(
     context: Context,
     var reactionsConfig: ReactionsConfig,
+    var reactionClickListener: ReactionClickListener? = null,
     var reactionSelectedListener: ReactionSelectedListener? = null
 ) : PopupWindow(context), View.OnClickListener, View.OnLongClickListener {
 
@@ -71,7 +72,7 @@ class ReactionPopup @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onClick(v: View?) {
-        reactionSelectedListener?.invoke(reactionsConfig.defaultReactionPosition)
+        reactionClickListener?.invoke()
     }
 
 }

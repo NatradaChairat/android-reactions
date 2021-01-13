@@ -3,25 +3,21 @@ package com.github.pgreze.reactions.sample
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import androidx.annotation.DrawableRes
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import com.github.pgreze.reactions.PopupGravity
-import com.github.pgreze.reactions.ReactionPopup
-import com.github.pgreze.reactions.reactionConfig
-import com.github.pgreze.reactions.reactionPopup
-import com.github.pgreze.reactions.reactions
+import androidx.annotation.DrawableRes
+import com.github.pgreze.reactions.*
 
 fun MainActivity.setupTopRight() {
     // Popup DSL + listener via function
     val popup1 = reactionPopup(this, ::onReactionSelected) {
         reactions {
-            resId    { R.drawable.ic_crypto_btc }
-            resId    { R.drawable.ic_crypto_eth }
-            resId    { R.drawable.ic_crypto_ltc }
+            resId { R.drawable.ic_crypto_btc }
+            resId { R.drawable.ic_crypto_eth }
+            resId { R.drawable.ic_crypto_ltc }
             reaction { R.drawable.ic_crypto_dash scale ImageView.ScaleType.FIT_CENTER }
             reaction { R.drawable.ic_crypto_xrp scale ImageView.ScaleType.FIT_CENTER }
             drawable { drawable(R.drawable.ic_crypto_xmr) }
@@ -43,6 +39,7 @@ fun MainActivity.setupTopRight() {
         toast("$position selected")
         true
     }
+    popup1.reactionClickListener = {}
     findViewById<View>(R.id.top_right_btn).setOnClickListener(popup1)
     findViewById<View>(R.id.top_right_btn).setOnLongClickListener(popup1)
 }
@@ -69,12 +66,19 @@ fun MainActivity.setupRight() {
         textColor = Color.BLACK
         textHorizontalPadding = 0
         textVerticalPadding = 0
-        textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, resources.displayMetrics)
+        textSize =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, resources.displayMetrics)
         popupAlpha = 255
     }
-    val popup2 = ReactionPopup(this, config) { position -> true.also {
-        toast("$position selected")
-    } }
+    val popup2 = ReactionPopup(this, config,
+        reactionClickListener = {},
+        reactionSelectedListener = { position ->
+            true.also {
+                toast("$position selected")
+            }
+
+        }
+    )
     findViewById<View>(R.id.right_btn).setOnClickListener(popup2)
     findViewById<View>(R.id.right_btn).setOnLongClickListener(popup2)
 }
@@ -85,8 +89,8 @@ fun MainActivity.onReactionSelected(position: Int) = true.also {
 
 fun MainActivity.toast(text: String) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT)
-            .apply { setGravity(Gravity.CENTER, 0, 300) }
-            .show()
+        .apply { setGravity(Gravity.CENTER, 0, 300) }
+        .show()
 }
 
 @Suppress("DEPRECATION")
