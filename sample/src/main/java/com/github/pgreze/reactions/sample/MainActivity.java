@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                         .withTextSize(getResources().getDimension(R.dimen.reactions_text_size))
                         .build(),
                 () -> {
-
                     return null;
                 }
                 ,
@@ -106,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Reactions", "Selection position=" + position);
             // Close selector if not invalid item (testing purpose)
             return position != 3;
+        });
+
+        popup.setReactionClickListener(() -> {
+            Log.i("Reactions", "onReactionClick");
+            return null;
         });
 
         findViewById(R.id.crypto_bottom_left).setOnClickListener(popup);

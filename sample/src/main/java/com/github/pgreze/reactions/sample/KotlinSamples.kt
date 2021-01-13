@@ -13,7 +13,7 @@ import com.github.pgreze.reactions.*
 
 fun MainActivity.setupTopRight() {
     // Popup DSL + listener via function
-    val popup1 = reactionPopup(this, ::onReactionSelected) {
+    val popup1 = reactionPopup(this, ::onReactionClick, ::onReactionSelected) {
         reactions {
             resId { R.drawable.ic_crypto_btc }
             resId { R.drawable.ic_crypto_eth }
@@ -39,7 +39,9 @@ fun MainActivity.setupTopRight() {
         toast("$position selected")
         true
     }
-    popup1.reactionClickListener = {}
+    popup1.reactionClickListener = {
+        toast("onReactClick")
+    }
     findViewById<View>(R.id.top_right_btn).setOnClickListener(popup1)
     findViewById<View>(R.id.top_right_btn).setOnLongClickListener(popup1)
 }
@@ -71,7 +73,7 @@ fun MainActivity.setupRight() {
         popupAlpha = 255
     }
     val popup2 = ReactionPopup(this, config,
-        reactionClickListener = {},
+        reactionClickListener = { toast("onReactionClick") },
         reactionSelectedListener = { position ->
             true.also {
                 toast("$position selected")
@@ -85,6 +87,10 @@ fun MainActivity.setupRight() {
 
 fun MainActivity.onReactionSelected(position: Int) = true.also {
     toast("$position selected")
+}
+
+fun MainActivity.onReactionClick() {
+    toast("onReactionClick")
 }
 
 fun MainActivity.toast(text: String) {
